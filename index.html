@@ -133,6 +133,11 @@
       background: #fef2f2;
     }
     .sentence input:disabled { opacity: 0.85; }
+    .hint {
+      color: var(--muted);
+      font-weight: 500;
+      white-space: nowrap;
+    }
     .feedback {
       font-size: 0.85rem;
       margin-top: 0.4rem;
@@ -286,42 +291,49 @@
       {
         id: 1,
         parts: ["I don’t want to go to the swimming pool. I’d rather ", " to the beach."],
+        hints: ["go"],
         answers: [["go"]],
         show: "go"
       },
       {
         id: 2,
         parts: ["A: But … B: I’d rather you ", " quiet, Michelle."],
+        hints: ["stay"],
         answers: [["stayed"]],
         show: "stayed"
       },
       {
         id: 3,
         parts: ["I’d much rather you ", " the door and ", " me out."],
+        hints: ["unlock", "let"],
         answers: [["unlocked", "let"]],
         show: "unlocked / let"
       },
       {
         id: 4,
         parts: ["I’d rather you ", " here when this all happened. You could’ve been able to help."],
+        hints: ["be"],
         answers: [["had been"]],
         show: "had been"
       },
       {
         id: 5,
         parts: ["She’d rather ", " the risk than ", " the opportunity."],
+        hints: ["take", "miss"],
         answers: [["take", "miss"]],
         show: "take / miss"
       },
       {
         id: 6,
         parts: ["He’d rather you ", " the police that night."],
+        hints: ["call"],
         answers: [["had called"]],
         show: "had called"
       },
       {
         id: 7,
         parts: ["I’d rather you ", " that. Mum was really upset."],
+        hints: ["not do"],
         answers: [
           ["hadn't done"],
           ["had not done"],
@@ -332,18 +344,21 @@
       {
         id: 8,
         parts: ["A: Would you rather I ", " you home? B: Nah, I’d rather ", "."],
+        hints: ["drive", "walk"],
         answers: [["drove", "walk"]],
         show: "drove / walk"
       },
       {
         id: 9,
         parts: ["You know he was so offended. He’d much rather you ", " him along."],
+        hints: ["invite"],
         answers: [["had invited"]],
         show: "had invited"
       },
       {
         id: 10,
         parts: ["It’s a secret, so I’d rather you ", " anyone."],
+        hints: ["not tell"],
         answers: [
           ["didn't tell"],
           ["did not tell"],
@@ -354,6 +369,7 @@
       {
         id: 11,
         parts: ["Amanda hates him! She’d rather he ", " the upcoming meeting."],
+        hints: ["not join"],
         answers: [
           ["didn't join"],
           ["did not join"],
@@ -364,6 +380,7 @@
       {
         id: 12,
         parts: ["This is horrendous. Yes, I’d very much rather you ", " me."],
+        hints: ["not / tell"],
         answers: [
           ["hadn't told"],
           ["had not told"],
@@ -374,18 +391,21 @@
       {
         id: 13,
         parts: ["We’d rather you ", " the report instead of James."],
+        hints: ["handle"],
         answers: [["handled"]],
         show: "handled"
       },
       {
         id: 14,
         parts: ["Personally, I’d rather you ", " it. You’re more experienced than Dylan."],
+        hints: ["do"],
         answers: [["did"]],
         show: "did"
       },
       {
         id: 15,
         parts: ["A: Shall we eat out tonight? B: I ", "."],
+        hints: ["rather / not"],
         answers: [
           ["would rather not"],
           ["'d rather not"],
@@ -442,6 +462,10 @@
           const long = (item.id === 4 || item.id === 7 || item.id === 12 || item.id === 15);
           const width = long ? "9.5rem" : (numGaps > 1 ? "6rem" : "7rem");
           sentenceHTML += `<input type="text" data-gap="${g}" autocomplete="off" spellcheck="false" style="min-width:${width}">`;
+          // Show the base verb in brackets so students know what to transform
+          if (item.hints && item.hints[g]) {
+            sentenceHTML += ` <span class="hint">(${item.hints[g]})</span>`;
+          }
         }
         sentenceHTML += item.parts[numGaps];
 
